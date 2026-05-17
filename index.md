@@ -3,10 +3,7 @@ layout: minimalist
 title: Derelicte
 ---
 
-<section class="featured">
-    <h2>FEATURED EXHIBITION</h2>
-    <p>Curated selections from the derelict and the sublime. Each photograph tells a story of time, neglect, and quiet beauty.</p>
-</section>
+
 
 <div class="gallery">
 {% for item in site.data.gallery %}
@@ -19,7 +16,7 @@ title: Derelicte
 <aside class="sidebar">
     <article class="card">
         <h3>ABOUT</h3>
-        <p>Derelicte Photography captures the haunting beauty of abandoned spaces. Our lens finds poetry in decay, grace in ruin.</p>
+        <p>Photography that reveals the hidden angles of reality. Each image captures the cyclopean and the cosmic: ancient ruins of forgotten eons, non-Euclidean horizons, and the quiet beauty of familiar places.</p>
     </article>
 </aside>
 
