@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <meta name="description" content="{{ site.description }}">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Josefin+Sans:wght@400;700&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #593239;
+            --color-dark: #0D0D0B;
+            --color-cream: #F2DFBB;
+            --color-gold: #F2DC6D;
+            --color-brown: #8C3C1F;
+            --color-gray: #595852;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--color-dark);
+            color: var(--color-cream);
+            font-family: 'Josefin Sans', sans-serif;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(242,223,187,0.03) 1px, transparent 1px);
+            background-size: 100px 100px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            padding: 4rem 0 2rem;
+            position: relative;
+        }
+
+        header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            letter-spacing: 0.3rem;
+            color: var(--color-cream);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.2rem;
+            color: var(--color-gold);
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .angled-divider {
+            height: 4px;
+            background: linear-gradient(90deg, transparent 0%, var(--color-gold) 50%, transparent 100%);
+            margin: 2rem 0;
+            width: 100%;
+        }
+
+        main {
+            padding: 2rem 0 4rem;
+        }
+
+        h2, h3, .card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.2rem;
+            color: var(--color-cream);
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--color-cream);
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .featured {
+            margin-bottom: 4rem;
+            padding: 2rem 0;
+            position: relative;
+        }
+
+        .featured p {
+            font-size: 1.2rem;
+            font-style: italic;
+            max-width: 800px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            background-color: #1a1a14;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(10%) contrast(1.05);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            filter: sepia(0%) contrast(1.1);
+            transform: scale(1.02);
+        }
+
+        .gallery-item::after {
+            content: attr(data-caption);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 1rem 1rem;
+            background: linear-gradient(transparent 0%, rgba(13, 13, 11, 0.95) 70%);
+            color: var(--color-cream);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.15rem;
+            text-align: center;
+            text-transform: uppercase;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .gallery-item::before {
+            content: attr(data-category);
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.2rem 0.6rem;
+            background-color: var(--color-primary);
+            color: var(--color-cream);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.1rem;
+            text-transform: uppercase;
+        }
+
+        .sidebar {
+            margin: 2rem 0;
+        }
+
+        .card {
+            padding: 2rem;
+            background: #1a1a14;
+            margin: 1.5rem 0;
+        }
+
+        .card p, .card li {
+            color: var(--color-cream);
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1rem;
+            line-height: 1.9;
+            opacity: 0.85;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(242, 220, 109, 0.15);
+        }
+
+        .card li:last-child {
+            border-bottom: none;
+        }
+
+        .quote {
+            padding: 2rem;
+            text-align: center;
+            font-family: 'Josefin Sans', sans-serif;
+            font-style: italic;
+            color: var(--color-cream);
+            font-size: 1.2rem;
+            line-height: 2;
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .quote::before, .quote::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 2px;
+            background: var(--color-gold);
+            transform: translateY(-50%);
+        }
+
+        .quote::before {
+            left: -40px;
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        .quote::after {
+            right: -40px;
+            transform: translateY(-50%) rotate(-45deg);
+        }
+
+        footer {
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--color-gray);
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.1rem;
+        }
+
+        footer strong {
+            color: var(--color-cream);
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 1024px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            header h1 {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 2.8rem;
+                letter-spacing: 0.2rem;
+            }
+            .tagline {
+                font-size: 1rem;
+            }
+            h2, h3 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>{{ site.title }}</h1>
+            <div class="tagline">{{ site.description | split: ' - ' | first }}</div>
+            <div class="angled-divider"></div>
+        </header>
+
+        <main>
+            {{ content }}
+        </main>
+
+        <footer>
+            <p><strong>{{ site.title }} PHOTOGRAPHY</strong></p>
+            <p>&copy; {{ "now" | date: "%Y" }} {{ site.title }}. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
