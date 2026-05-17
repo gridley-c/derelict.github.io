@@ -36,3 +36,4 @@ _site/
 .env
 .env.local
 .env.*.local
+HANDOVER.md
