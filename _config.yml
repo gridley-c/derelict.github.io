@@ -1,0 +1,36 @@
+title: Derelicte
+description: Journal of Photography - A Chronicle of Light & Abandonment
+url: https://derelicte.world
+baseurl: ""
+
+# 1940s/50s Magazine Design
+colors:
+  primary: "#593239"
+  dark: "#0D0D0B"
+  cream: "#F2DFBB"
+  gold: "#F2DC6D"
+  brown: "#8C3C1F"
+  gray: "#595852"
+
+# Typography from design.txt
+fonts:
+  headline: "'Bebas Neue', sans-serif"
+  body: "'Raleway', serif"
+  accent: "'Josefin Sans', sans-serif"
+  display: "'Anton', sans-serif"
+
+# Build settings
+markdown: kramdown
+theme: null
+plugins:
+  - jekyll-feed
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - .git/
+  - .gitignore
+  - README.md
+  - design.txt

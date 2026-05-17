@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <meta name="description" content="{{ site.description }}">
+    
+    <!-- Google Fonts from design.txt -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Josefin+Sans:wght@400;700&family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================
+           1940s/50s MAGAZINE DESIGN
+           Colors from design.txt
+           ============================================ */
+        :root {
+            --color-primary: #593239;    /* Deep wine/purple */
+            --color-dark: #0D0D0B;        /* Near black */
+            --color-cream: #F2DFBB;       /* Vintage cream */
+            --color-gold: #F2DC6D;       /* Warm gold */
+            --color-brown: #8C3C1F;       /* Deep brown */
+            --color-gray: #595852;       /* Dark gray */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--color-dark);
+            color: var(--color-cream);
+            font-family: 'Raleway', serif;
+            line-height: 1.8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Paper texture overlay for vintage feel */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 5% 15%, rgba(242,223,187,0.04) 1px, transparent 1px),
+                radial-gradient(circle at 95% 85%, rgba(242,220,109,0.03) 1px, transparent 1px);
+            background-size: 80px 80px, 120px 120px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Main page container with vintage borders */
+        .page-container {
+            width: 100%;
+            max-width: 1200px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--color-dark);
+            position: relative;
+            border-left: 10px double var(--color-brown);
+            border-right: 10px double var(--color-brown);
+            box-shadow: 0 0 20px rgba(140, 60, 31, 0.3);
+        }
+
+        /* ============================================
+           MASTHEAD - Time Magazine Style
+           ============================================ */
+        header {
+            padding: 3rem 2rem;
+            border-bottom: 4px double var(--color-gold);
+            text-align: center;
+            background: linear-gradient(180deg, var(--color-dark) 0%, #1a1a14 100%);
+            position: relative;
+        }
+
+        .masthead {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .date-line {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.4rem;
+            color: var(--color-gray);
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-family: 'Anton', sans-serif;
+            font-size: 6rem;
+            font-weight: 400;
+            letter-spacing: 0.3rem;
+            color: var(--color-cream);
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.6);
+            line-height: 0.9;
+            margin: 0.5rem 0;
+        }
+
+        .tagline {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 0.5rem;
+            color: var(--color-gold);
+            text-transform: uppercase;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .edition {
+            font-family: 'Josefin Sans', sans-serif;
+            font-style: italic;
+            color: var(--color-gray);
+            font-size: 1rem;
+            letter-spacing: 0.2rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Ornate divider */
+        .divider {
+            width: 100%;
+            height: 2px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--color-gold) 0px,
+                var(--color-gold) 6px,
+                transparent 6px,
+                transparent 12px
+            );
+            margin: 1.5rem auto;
+            max-width: 800px;
+        }
+
+        /* ============================================
+           MAIN CONTENT
+           ============================================ */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            border-bottom: 4px double var(--color-gold);
+        }
+
+        .featured {
+            padding: 2rem;
+            background: linear-gradient(135deg, #1a1a14 0%, var(--color-dark) 100%);
+            border: 3px solid var(--color-brown);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .featured h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 0.3rem;
+            color: var(--color-cream);
+            margin-bottom: 1rem;
+            border-bottom: 3px solid var(--color-gold);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .featured p {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.2rem;
+            color: var(--color-cream);
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        /* ============================================
+           GALLERY - 1940s Photo Spread Layout
+           ============================================ */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            padding: 1rem 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background-color: #1a1a14;
+            border: 5px solid var(--color-brown);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.6);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            border-color: var(--color-gold);
+            box-shadow: 0 8px 20px rgba(242, 220, 109, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(15%) contrast(1.1) brightness(0.95);
+            opacity: 0.95;
+            transition: all 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            filter: sepia(0%) contrast(1.2) brightness(1.05);
+            opacity: 1;
+        }
+
+        .gallery-item::after {
+            content: attr(data-caption);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 1rem 1rem;
+            background: linear-gradient(transparent 0%, rgba(13, 13, 11, 0.98) 80%);
+            color: var(--color-cream);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.2rem;
+            text-align: center;
+            text-transform: uppercase;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .gallery-item::before {
+            content: attr(data-category);
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--color-primary);
+            color: var(--color-cream);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* ============================================
+           SIDEBAR CARDS
+           ============================================ */
+        .sidebar {
+            grid-column: span 1;
+        }
+
+        .card {
+            padding: 2rem;
+            background: #1a1a14;
+            border: 2px solid var(--color-brown);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            margin-bottom: 2rem;
+        }
+
+        .card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 0.2rem;
+            color: var(--color-gold);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px dotted var(--color-brown);
+        }
+
+        .card p, .card li {
+            color: var(--color-cream);
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1rem;
+            line-height: 2;
+            opacity: 0.9;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card li {
+            padding: 0.4rem 0;
+            border-bottom: 1px dotted var(--color-gray);
+        }
+
+        .card li:last-child {
+            border-bottom: none;
+        }
+
+        /* ============================================
+           QUOTE BLOCK
+           ============================================ */
+        .quote {
+            padding: 2.5rem;
+            text-align: center;
+            font-family: 'Josefin Sans', sans-serif;
+            font-style: italic;
+            color: var(--color-cream);
+            font-size: 1.3rem;
+            line-height: 2.2;
+            border-left: 5px solid var(--color-brown);
+            border-right: 5px solid var(--color-brown);
+            background-color: rgba(140, 60, 31, 0.1);
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .quote::before, .quote::after {
+            content: '"';
+            font-family: 'Anton', sans-serif;
+            font-size: 5rem;
+            color: var(--color-brown);
+            opacity: 0.4;
+            line-height: 1;
+            position: absolute;
+            top: 0.5rem;
+        }
+
+        .quote::before {
+            left: 1rem;
+        }
+
+        .quote::after {
+            right: 1rem;
+            content: '"';
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            color: var(--color-gray);
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.15rem;
+            background: linear-gradient(180deg, #1a1a14 0%, var(--color-dark) 100%);
+            border-top: 4px double var(--color-gold);
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        footer strong {
+            color: var(--color-cream);
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.2rem;
+        }
+
+        /* ============================================
+           CORNER ORNAMENTS
+           ============================================ */
+        .corner-ornament {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 5px solid var(--color-gold);
+            opacity: 0.5;
+        }
+
+        .corner-ornament.top-left {
+            top: 0;
+            left: 0;
+            border-right: none;
+            border-bottom: none;
+            border-radius: 10px 0 0 0;
+        }
+
+        .corner-ornament.top-right {
+            top: 0;
+            right: 0;
+            border-left: none;
+            border-bottom: none;
+            border-radius: 0 10px 0 0;
+        }
+
+        .corner-ornament.bottom-left {
+            bottom: 0;
+            left: 0;
+            border-right: none;
+            border-top: none;
+            border-radius: 0 0 0 10px;
+        }
+
+        .corner-ornament.bottom-right {
+            bottom: 0;
+            right: 0;
+            border-left: none;
+            border-top: none;
+            border-radius: 0 0 10px 0;
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+        @media (max-width: 1024px) {
+            main {
+                grid-template-columns: 1fr 1fr;
+            }
+            .gallery {
+                grid-column: span 2;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .featured {
+                grid-column: span 2;
+            }
+            .sidebar {
+                grid-column: span 2;
+            }
+            h1 {
+                font-size: 4.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-container {
+                border-left: 4px double var(--color-brown);
+                border-right: 4px double var(--color-brown);
+            }
+            main {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .gallery {
+                grid-column: span 1;
+                grid-template-columns: 1fr;
+            }
+            .featured {
+                grid-column: span 1;
+            }
+            .sidebar {
+                grid-column: span 1;
+            }
+            h1 {
+                font-size: 3rem;
+                letter-spacing: 0.2rem;
+            }
+            .tagline {
+                font-size: 1.1rem;
+                letter-spacing: 0.3rem;
+            }
+            .quote {
+                font-size: 1.1rem;
+            }
+            .quote::before, .quote::after {
+                font-size: 3rem;
+            }
+        }
+
+        /* Print styles for magazine feel */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            .page-container {
+                border: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header>
+            <div class="masthead">
+                <div class="date-line">ESTABLISHED MMXXVI</div>
+                <h1>{{ site.title }}</h1>
+                <div class="tagline">{{ site.description | split: ' - ' | first }}</div>
+                <div class="edition">{{ site.description | split: ' - ' | last }}</div>
+            </div>
+            <div class="divider"></div>
+        </header>
+
+        <main>
+            {{ content }}
+        </main>
+
+        <footer>
+            <p><strong>{{ site.title }} PHOTOGRAPHY</strong></p>
+            <p>&copy; {{ "now" | date: "%Y" }} Derelicte. All rights reserved.</p>
+        </footer>
+
+        <!-- Corner ornaments -->
+        <div class="corner-ornament top-left"></div>
+        <div class="corner-ornament top-right"></div>
+        <div class="corner-ornament bottom-left"></div>
+        <div class="corner-ornament bottom-right"></div>
+    </div>
+</body>
+</html>
