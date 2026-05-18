@@ -8,10 +8,7 @@ title: Derelicte
 <div class="gallery">
 {% for item in site.data.gallery %}
 {% assign classes = "gallery-item" %}
-{% if forloop.index == 1 %}{% assign classes = classes | append: " wide" %}
-{% elsif forloop.index == 3 %}{% assign classes = classes | append: " tall" %}
-{% elsif forloop.index == 5 %}{% assign classes = classes | append: " wide" %}
-{% elsif forloop.index == 7 %}{% assign classes = classes | append: " tall" %}{% endif %}
+{% if forloop.index == 2 or forloop.index == 5 %}{% assign classes = classes | append: " wide" %}{% endif %}
     <div class="{{ classes }}" data-caption="{{ item.caption }}" data-category="{{ item.category }}">
         <img src="https://gp-derelict.s3.amazonaws.com/{{ item.filename }}" alt="{{ item.alt }}">
     </div>
