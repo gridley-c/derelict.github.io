@@ -7,7 +7,12 @@ title: Derelicte
 
 <div class="gallery">
 {% for item in site.data.gallery %}
-    <div class="gallery-item" data-caption="{{ item.caption }}" data-category="{{ item.category }}">
+{% assign classes = "gallery-item" %}
+{% if forloop.index == 1 %}{% assign classes = classes | append: " wide" %}
+{% elsif forloop.index == 3 %}{% assign classes = classes | append: " tall" %}
+{% elsif forloop.index == 5 %}{% assign classes = classes | append: " wide" %}
+{% elsif forloop.index == 7 %}{% assign classes = classes | append: " tall" %}{% endif %}
+    <div class="{{ classes }}" data-caption="{{ item.caption }}" data-category="{{ item.category }}">
         <img src="https://gp-derelict.s3.amazonaws.com/{{ item.filename }}" alt="{{ item.alt }}">
     </div>
 {% endfor %}
@@ -34,5 +39,5 @@ title: Derelicte
 </aside>
 
 <blockquote class="quote">
-    Photography takes an instant out of time, altering life by holding it still.
+    The photograph is a rusted cage, where light is trapped and left to wither in the cold.
 </blockquote>
