@@ -2,38 +2,39 @@
   caption: The Ruin's Thirsting Vein
   alt: Abandoned industrial hall with natural light
   category: Industrial
-
+  featured: false
 - filename: 138ed475-bfeb-4661-9f64-f2323aa4c5a3_rw_1920.jpg
   caption: Veils Of The Fungal Moon
   alt: Old chair in derelict room
   category: Objects
-
+  featured: true
 - filename: 34113036-87b3-4caf-97d0-f419d6b1e4b1_rw_1920.jpg
   caption: Beyond The Shattered Sky
   alt: Rusty metal with weathered patina
   category: Industrial
-
+  featured: false
 - filename: 36fdc410-abd9-461b-bd31-103cf005c03f_rw_1920.jpg
   caption: The Spiral Of Yhoundeh
   alt: Broken window with view outside
   category: Architecture
-
+  featured: true
 - filename: 9d8399b4-37f0-4f65-a3ce-422a9c8b9981_rw_1920.jpg
   caption: The Chariot Of Yhoundeh
   alt: Old machinery in abandoned factory
   category: Industrial
-
+  featured: true
 - filename: bb51f19b-1bd2-49a0-ab46-06880d5b7609_rw_1920.jpg
   caption: The Eldritch Veil Of The Ancient
   alt: Long corridor with peeling paint
   category: Architecture
-
+  featured: true
 - filename: c0940414-00ff-4261-964f-4930fd0c7e0b_rw_1920.jpg
   caption: The Lake Of Forgotten Kings
   alt: Empty space with natural lighting
   category: Industrial
-
+  featured: true
 - filename: e708dd6f-beb1-4d8b-9151-ecba18578bde_rw_1920.jpg
   caption: The Frozen Circuits Of The Abyss
   alt: Old book left open
   category: Objects
+  featured: true
