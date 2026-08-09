@@ -5,7 +5,7 @@ title: Derelicte
 
 <div class="gallery">
 {% for item in site.data.gallery %}
-    <div class="gallery-item" data-caption="{{ item.caption }}" data-url="https://gp-derelict.s3.amazonaws.com/{{ item.filename }}" data-alt="{{ item.alt }}">
+    <div class="gallery-item" data-caption="{{ item.caption }}" data-url="https://gp-derelict.s3.amazonaws.com/{{ item.filename }}" data-alt="{{ item.alt }}"{% if item.camera %} data-camera="{{ item.camera }}"{% endif %}{% if item.lens %} data-lens="{{ item.lens }}"{% endif %}{% if item.settings %} data-settings="{{ item.settings }}"{% endif %}{% if item.keywords %} data-keywords="{{ item.keywords | join: ',' }}"{% endif %}>
         <img src="https://gp-derelict.s3.amazonaws.com/{{ item.filename }}" alt="{{ item.alt }}" loading="lazy">
     </div>
 {% endfor %}
@@ -20,8 +20,22 @@ title: Derelicte
 
 <aside class="sidebar">
     <article class="card">
-        <h3>NOTE</h3>
-        <p>Images are resized, titled, and published automatically from the gallery watcher.</p>
+        <h3>FILTER</h3>
+        <p id="active-keyword" class="active-keyword">Showing all images</p>
+        <ul id="keyword-list" class="keyword-list">
+{% assign all_keywords = site.data.gallery | map: 'keywords' | compact | join: ',' | split: ',' %}
+{% assign unique_keywords = all_keywords | uniq | sort %}
+{% for keyword in unique_keywords %}
+{% assign trimmed = keyword | strip %}
+{% if trimmed != '' %}
+{% assign count = 0 %}
+{% for item in site.data.gallery %}
+{% if item.keywords contains trimmed %}{% assign count = count | plus: 1 %}{% endif %}
+{% endfor %}
+            <li><button class="keyword-btn" data-keyword="{{ trimmed }}">{{ trimmed }} <span class="count">{{ count }}</span></button></li>
+{% endif %}
+{% endfor %}
+        </ul>
     </article>
 </aside>
 
@@ -35,5 +49,7 @@ title: Derelicte
     <div class="lightbox-meta">
         <h3 id="lightbox-caption"></h3>
         <p id="lightbox-alt"></p>
+        <p id="lightbox-exif" class="exif"></p>
+        <div id="lightbox-keywords" class="keyword-cloud"></div>
     </div>
 </div>

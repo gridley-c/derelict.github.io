@@ -219,6 +219,71 @@
             opacity: 0.88;
         }
 
+        .active-keyword {
+            font-style: italic;
+            color: var(--color-gold);
+            margin-bottom: 1rem;
+        }
+
+        .keyword-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .keyword-list li { margin: 0; padding: 0; border: none; }
+
+        .keyword-btn {
+            background: rgba(89, 50, 57, 0.6);
+            border: 1px solid rgba(242, 220, 109, 0.2);
+            color: var(--color-cream);
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 0.8rem;
+            padding: 0.35rem 0.7rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .keyword-btn:hover, .keyword-btn.active {
+            background: var(--color-gold);
+            color: var(--color-dark);
+            border-color: var(--color-gold);
+        }
+
+        .keyword-btn .count {
+            margin-left: 0.35rem;
+            opacity: 0.8;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .keyword-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .keyword-cloud span {
+            background: rgba(89, 50, 57, 0.6);
+            border: 1px solid rgba(242, 220, 109, 0.2);
+            color: var(--color-cream);
+            font-size: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            text-transform: lowercase;
+        }
+
+        .exif {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.1rem;
+            color: var(--color-gold);
+            margin-top: 0.5rem;
+        }
+
+        .gallery-item.hidden { display: none; }
+
         .quote {
             grid-column: 1 / -1;
             padding: 3rem 2rem;
@@ -314,7 +379,7 @@
 
         .lightbox-meta p {
             opacity: 0.85;
-            margin-bottom: 0;
+            margin-bottom: 0.35rem;
         }
 
         @media (max-width: 1024px) {
@@ -327,8 +392,9 @@
             .container { padding: 0 1rem; }
             header h1 { font-size: 3.2rem; letter-spacing: 0.2rem; }
             .tagline { font-size: 1rem; letter-spacing: 0.2rem; }
-            .gallery { grid-template-columns: 1fr; }
+            .gallery { column-width: 240px; }
             .sidebar { display: block; }
+            .keyword-list { max-height: 220px; overflow-y: auto; }
             .quote { font-size: 1.1rem; }
             .corner { width: 40px; height: 40px; }
         }
@@ -361,18 +427,39 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const items = document.querySelectorAll('.gallery-item');
+            const items = Array.from(document.querySelectorAll('.gallery-item'));
             const lightbox = document.getElementById('lightbox');
             const lbImg = document.getElementById('lightbox-img');
             const lbCaption = document.getElementById('lightbox-caption');
             const lbAlt = document.getElementById('lightbox-alt');
+            const lbExif = document.getElementById('lightbox-exif');
+            const lbKeywords = document.getElementById('lightbox-keywords');
             const lbClose = lightbox.querySelector('.lightbox-close');
+            const keywordBtns = document.querySelectorAll('.keyword-btn');
+            const activeLabel = document.getElementById('active-keyword');
+            let activeKeyword = null;
 
             function open(item) {
                 lbImg.src = item.dataset.url;
                 lbImg.alt = item.dataset.alt;
                 lbCaption.textContent = item.dataset.caption;
                 lbAlt.textContent = item.dataset.alt;
+
+                const parts = [];
+                if (item.dataset.camera) parts.push(item.dataset.camera);
+                if (item.dataset.lens) parts.push(item.dataset.lens);
+                if (item.dataset.settings) parts.push(item.dataset.settings);
+                lbExif.textContent = parts.join(' · ');
+
+                lbKeywords.innerHTML = '';
+                if (item.dataset.keywords) {
+                    item.dataset.keywords.split(',').forEach(k => {
+                        const span = document.createElement('span');
+                        span.textContent = k.trim();
+                        lbKeywords.appendChild(span);
+                    });
+                }
+
                 lightbox.classList.add('active');
                 lightbox.setAttribute('aria-hidden', 'false');
                 document.body.style.overflow = 'hidden';
@@ -385,10 +472,27 @@
                 lbImg.src = '';
             }
 
+            function filter(keyword) {
+                activeKeyword = keyword;
+                keywordBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.keyword === keyword));
+                let visible = 0;
+                items.forEach(item => {
+                    const kws = item.dataset.keywords || '';
+                    const show = !keyword || kws.split(',').map(k => k.trim()).includes(keyword);
+                    item.classList.toggle('hidden', !show);
+                    if (show) visible++;
+                });
+                activeLabel.textContent = keyword ? `Showing ${visible} image${visible === 1 ? '' : 's'} tagged “${keyword}”` : 'Showing all images';
+            }
+
             items.forEach(item => item.addEventListener('click', () => open(item)));
             lbClose.addEventListener('click', close);
             lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
             document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+            keywordBtns.forEach(btn => btn.addEventListener('click', () => {
+                const kw = btn.dataset.keyword;
+                filter(activeKeyword === kw ? null : kw);
+            }));
         });
     </script>
 </body>
