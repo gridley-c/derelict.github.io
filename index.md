@@ -5,7 +5,7 @@ title: Derelicte
 
 <div class="gallery">
 {% for item in site.data.gallery %}
-    <div class="gallery-item{% if item.featured %} wide{% endif %}" data-caption="{{ item.caption }}" data-category="{{ item.category }}" data-url="https://gp-derelict.s3.amazonaws.com/{{ item.filename }}" data-alt="{{ item.alt }}">
+    <div class="gallery-item" data-caption="{{ item.caption }}" data-url="https://gp-derelict.s3.amazonaws.com/{{ item.filename }}" data-alt="{{ item.alt }}">
         <img src="https://gp-derelict.s3.amazonaws.com/{{ item.filename }}" alt="{{ item.alt }}" loading="lazy">
     </div>
 {% endfor %}
@@ -20,14 +20,8 @@ title: Derelicte
 
 <aside class="sidebar">
     <article class="card">
-        <h3>COLLECTIONS</h3>
-        <ul>
-{% assign categories = site.data.gallery | map: 'category' | compact | uniq | sort %}
-{% for category in categories %}
-{% assign count = site.data.gallery | where: 'category', category | size %}
-            <li><span>{{ category }}</span> <span class="count">{{ count }}</span></li>
-{% endfor %}
-        </ul>
+        <h3>NOTE</h3>
+        <p>Images are resized, titled, and published automatically from the gallery watcher.</p>
     </article>
 </aside>
 
@@ -41,6 +35,5 @@ title: Derelicte
     <div class="lightbox-meta">
         <h3 id="lightbox-caption"></h3>
         <p id="lightbox-alt"></p>
-        <span id="lightbox-category" class="category-pill"></span>
     </div>
 </div>

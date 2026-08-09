@@ -189,20 +189,6 @@
 
         .gallery-item:hover::after { opacity: 1; }
 
-        .gallery-item::before {
-            content: attr(data-category);
-            position: absolute;
-            top: 0.6rem;
-            right: 0.6rem;
-            padding: 0.25rem 0.7rem;
-            background-color: var(--color-primary);
-            color: var(--color-cream);
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 0.65rem;
-            letter-spacing: 0.1rem;
-            text-transform: uppercase;
-            z-index: 2;
-        }
 
         .sidebar { align-self: start; }
 
@@ -226,31 +212,11 @@
             margin-bottom: 1rem;
         }
 
-        .card p, .card li {
+        .card p {
             color: var(--color-cream);
             font-size: 0.95rem;
             line-height: 1.85;
             opacity: 0.88;
-        }
-
-        .card ul { list-style: none; padding-left: 0; }
-
-        .card li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.55rem 0;
-            border-bottom: 1px solid rgba(242, 220, 109, 0.1);
-        }
-
-        .card li:last-child { border-bottom: none; }
-
-        .card li .count {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 0.8rem;
-            color: var(--color-gold);
-            background: rgba(89, 50, 57, 0.5);
-            padding: 0.1rem 0.4rem;
         }
 
         .quote {
@@ -348,18 +314,7 @@
 
         .lightbox-meta p {
             opacity: 0.85;
-            margin-bottom: 0.75rem;
-        }
-
-        .category-pill {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: var(--color-primary);
-            color: var(--color-cream);
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 0.1rem;
-            text-transform: uppercase;
+            margin-bottom: 0;
         }
 
         @media (max-width: 1024px) {
@@ -411,7 +366,6 @@
             const lbImg = document.getElementById('lightbox-img');
             const lbCaption = document.getElementById('lightbox-caption');
             const lbAlt = document.getElementById('lightbox-alt');
-            const lbCategory = document.getElementById('lightbox-category');
             const lbClose = lightbox.querySelector('.lightbox-close');
 
             function open(item) {
@@ -419,7 +373,6 @@
                 lbImg.alt = item.dataset.alt;
                 lbCaption.textContent = item.dataset.caption;
                 lbAlt.textContent = item.dataset.alt;
-                lbCategory.textContent = item.dataset.category;
                 lightbox.classList.add('active');
                 lightbox.setAttribute('aria-hidden', 'false');
                 document.body.style.overflow = 'hidden';
