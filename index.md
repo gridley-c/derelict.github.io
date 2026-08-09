@@ -3,13 +3,9 @@ layout: minimalist
 title: Derelicte
 ---
 
-
-
 <div class="gallery">
 {% for item in site.data.gallery %}
-{% assign classes = "gallery-item" %}
-{% if forloop.index == 2 or forloop.index == 5 %}{% assign classes = classes | append: " wide" %}{% endif %}
-    <div class="{{ classes }}" data-caption="{{ item.caption }}" data-category="{{ item.category }}">
+    <div class="gallery-item{% if item.featured %} wide{% endif %}" data-caption="{{ item.caption }}" data-category="{{ item.category }}">
         <img src="https://gp-derelict.s3.amazonaws.com/{{ item.filename }}" alt="{{ item.alt }}">
     </div>
 {% endfor %}
