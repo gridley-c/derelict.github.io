@@ -464,15 +464,35 @@
                 top: 0.35rem;
                 left: 0.5rem;
             }
+            .lightbox {
+                justify-content: flex-start;
+                padding: 1rem;
+                padding-top: 3.5rem;
+            }
+
+            .lightbox img {
+                height: 45vh;
+                max-height: 45vh;
+                width: auto;
+                max-width: 100%;
+                object-fit: contain;
+                flex-shrink: 0;
+            }
+
+            .lightbox-meta {
+                flex: 1 1 auto;
+                overflow-y: auto;
+                margin-top: 0.75rem;
+                padding: 0 0.5rem 2rem;
+                max-width: 100%;
+            }
+
             .lightbox .critique {
                 font-size: 0.85rem;
                 line-height: 1.6;
                 padding: 0 0.75rem;
-                max-height: 35vh;
-                overflow-y: auto;
-            }
-            .lightbox-meta {
-                max-width: 100%;
+                max-height: none;
+                overflow-y: visible;
             }
         }
     </style>
