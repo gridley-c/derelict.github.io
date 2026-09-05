@@ -506,6 +506,31 @@
             }
         }
 
+        @media (max-width: 600px) {
+            .gallery-critique {
+                padding: 1.25rem 1rem 1rem;
+                font-size: 0.75rem;
+                line-height: 1.65;
+                overflow-y: auto;
+                text-align: left;
+            }
+            .gallery-critique::before {
+                font-size: 1.6rem;
+                top: 0.35rem;
+                left: 0.5rem;
+            }
+            .lightbox .critique {
+                font-size: 0.85rem;
+                line-height: 1.6;
+                padding: 0 0.75rem;
+                max-height: 35vh;
+                overflow-y: auto;
+            }
+            .lightbox-meta {
+                max-width: 100%;
+            }
+        }
+
         /* Print styles for magazine feel */
         @media print {
             body {
