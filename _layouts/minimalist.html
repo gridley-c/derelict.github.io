@@ -189,6 +189,46 @@
 
         .gallery-item:hover::after { opacity: 1; }
 
+        .gallery-critique {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 1.5rem;
+            background: rgba(13, 13, 11, 0.92);
+            color: var(--color-cream);
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 0.92rem;
+            font-style: italic;
+            line-height: 1.8;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            border: 1px solid rgba(242, 220, 109, 0.15);
+        }
+
+        .gallery-item:hover .gallery-critique {
+            opacity: 1;
+        }
+
+        .gallery-critique::before {
+            content: '“';
+            font-family: 'Anton', sans-serif;
+            font-size: 2.5rem;
+            color: var(--color-gold);
+            opacity: 0.35;
+            line-height: 1;
+            position: absolute;
+            top: 0.6rem;
+            left: 0.8rem;
+        }
+
 
         .sidebar { align-self: start; }
 
@@ -280,6 +320,18 @@
             letter-spacing: 0.1rem;
             color: var(--color-gold);
             margin-top: 0.5rem;
+        }
+
+        .critique {
+            font-family: 'Josefin Sans', sans-serif;
+            font-style: italic;
+            font-size: 1rem;
+            line-height: 1.75;
+            color: var(--color-cream);
+            opacity: 0.9;
+            margin-top: 1rem;
+            padding: 0 1rem;
+            border-left: 2px solid var(--color-brown);
         }
 
         .gallery-item.hidden { display: none; }
@@ -433,6 +485,7 @@
             const lbCaption = document.getElementById('lightbox-caption');
             const lbAlt = document.getElementById('lightbox-alt');
             const lbExif = document.getElementById('lightbox-exif');
+            const lbCritique = document.getElementById('lightbox-critique');
             const lbKeywords = document.getElementById('lightbox-keywords');
             const lbClose = lightbox.querySelector('.lightbox-close');
             const keywordBtns = document.querySelectorAll('.keyword-btn');
@@ -450,6 +503,9 @@
                 if (item.dataset.lens) parts.push(item.dataset.lens);
                 if (item.dataset.settings) parts.push(item.dataset.settings);
                 lbExif.textContent = parts.join(' · ');
+
+                lbCritique.textContent = item.dataset.critique || '';
+                lbCritique.style.display = item.dataset.critique ? 'block' : 'none';
 
                 lbKeywords.innerHTML = '';
                 if (item.dataset.keywords) {
