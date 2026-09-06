@@ -7,9 +7,7 @@ title: Derelicte
 {% for item in site.data.gallery %}
     <div class="gallery-item" data-caption="{{ item.caption }}" data-url="https://gp-derelict.s3.amazonaws.com/{{ item.filename }}" data-alt="{{ item.alt }}"{% if item.camera %} data-camera="{{ item.camera }}"{% endif %}{% if item.lens %} data-lens="{{ item.lens }}"{% endif %}{% if item.settings %} data-settings="{{ item.settings }}"{% endif %}{% if item.keywords %} data-keywords="{{ item.keywords | join: ',' }}"{% endif %}{% if item.critique %} data-critique="{{ item.critique | escape }}"{% endif %}>
         <img src="https://gp-derelict.s3.amazonaws.com/{{ item.filename }}" alt="{{ item.alt }}" loading="lazy">
-        {% if item.critique %}
-        <div class="gallery-critique" aria-hidden="true">{{ item.critique }}</div>
-        {% endif %}
+
     </div>
 {% endfor %}
 </div>

@@ -189,45 +189,7 @@
 
         .gallery-item:hover::after { opacity: 1; }
 
-        .gallery-critique {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            padding: 2rem 1.5rem;
-            background: rgba(13, 13, 11, 0.92);
-            color: var(--color-cream);
-            font-family: 'Josefin Sans', sans-serif;
-            font-size: 0.92rem;
-            font-style: italic;
-            line-height: 1.8;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow-y: auto;
-            border: 1px solid rgba(242, 220, 109, 0.15);
-        }
-
-        .gallery-item:hover .gallery-critique {
-            opacity: 1;
-        }
-
-        .gallery-critique::before {
-            content: '“';
-            font-family: 'Anton', sans-serif;
-            font-size: 2.5rem;
-            color: var(--color-gold);
-            opacity: 0.35;
-            line-height: 1;
-            position: absolute;
-            top: 0.6rem;
-            left: 0.8rem;
-        }
+        /* Full critique lives in the lightbox; the grid thumbnail shows only the caption on hover. */
 
 
         .sidebar { align-self: start; }
@@ -400,9 +362,10 @@
 
         .lightbox img {
             max-width: 100%;
-            max-height: 78vh;
+            max-height: 58vh;
             object-fit: contain;
             border: 1px solid rgba(242, 220, 109, 0.2);
+            flex-shrink: 0;
         }
 
         .lightbox-close {
@@ -419,8 +382,11 @@
 
         .lightbox-meta {
             margin-top: 1.25rem;
+            padding: 0 1rem 1rem;
             text-align: center;
             max-width: 800px;
+            max-height: calc(36vh - 2rem);
+            overflow-y: auto;
         }
 
         .lightbox-meta h3 {
@@ -432,6 +398,12 @@
         .lightbox-meta p {
             opacity: 0.85;
             margin-bottom: 0.35rem;
+        }
+
+        .lightbox .critique {
+            max-width: 70ch;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         @media (max-width: 1024px) {
@@ -452,18 +424,6 @@
         }
 
         @media (max-width: 600px) {
-            .gallery-critique {
-                padding: 1.25rem 1rem 1rem;
-                font-size: 0.75rem;
-                line-height: 1.65;
-                overflow-y: auto;
-                text-align: left;
-            }
-            .gallery-critique::before {
-                font-size: 1.6rem;
-                top: 0.35rem;
-                left: 0.5rem;
-            }
             .lightbox {
                 justify-content: flex-start;
                 padding: 1rem;
@@ -485,6 +445,7 @@
                 margin-top: 0.75rem;
                 padding: 0 0.5rem 2rem;
                 max-width: 100%;
+                max-height: none;
             }
 
             .lightbox .critique {
