@@ -401,11 +401,48 @@
             background: linear-gradient(transparent 0%, rgba(13, 13, 11, 0.55) 2rem, rgba(13, 13, 11, 0.88) 100%);
         }
 
-        .lightbox-meta h3 {
+        /* Title + description pair: fixed vertical position on every photo.
+           Title on the left; description in small text, clamped so both
+           boxes share one height (align-items: stretch enforces it). */
+        .lightbox-titlerow {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 6;
+            display: flex;
+            align-items: stretch;
+            gap: 0.5rem;
+            max-width: calc(100vw - 9rem);
+        }
+
+        .lightbox-titlerow h3 {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0.5rem 1.1rem;
             color: var(--color-gold);
             font-size: 1.5rem;
-            margin: 0.25rem;
-            margin-bottom: 0.5rem;
+            background: rgba(13, 13, 11, 0.78);
+            border: 1px solid rgba(242, 220, 109, 0.28);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .lightbox-titlerow #lightbox-alt {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin: 0;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            opacity: 0.92;
+            max-width: 46ch;
+            background: rgba(13, 13, 11, 0.78);
+            border: 1px solid rgba(242, 220, 109, 0.28);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
         }
 
         .lightbox-meta > p {
@@ -414,7 +451,6 @@
         }
 
         /* Text fields float as translucent boxes over the fullscreen image */
-        .lightbox-meta h3,
         .lightbox-meta > p {
             display: inline-block;
             background: rgba(13, 13, 11, 0.78);
@@ -459,8 +495,20 @@
                 padding: 2.5rem 0.75rem 1rem;
             }
 
-            .lightbox-meta h3 {
-                font-size: 1.2rem;
+            .lightbox-titlerow {
+                top: 1rem;
+                left: 1rem;
+                max-width: calc(100vw - 6.5rem);
+                flex-wrap: wrap;
+                gap: 0.35rem;
+            }
+
+            .lightbox-titlerow h3 {
+                font-size: 1.1rem;
+            }
+
+            .lightbox-titlerow #lightbox-alt {
+                font-size: 0.75rem;
             }
 
             .lightbox .critique {

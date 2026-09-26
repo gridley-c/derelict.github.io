@@ -47,9 +47,11 @@ title: Derelicte
 <div id="lightbox" class="lightbox" aria-hidden="true">
     <button class="lightbox-close" aria-label="Close">&times;</button>
     <img id="lightbox-img" src="" alt="">
-    <div class="lightbox-meta">
+    <div class="lightbox-titlerow">
         <h3 id="lightbox-caption"></h3>
         <p id="lightbox-alt"></p>
+    </div>
+    <div class="lightbox-meta">
         <p id="lightbox-exif" class="exif"></p>
         <p id="lightbox-critique" class="critique"></p>
         <div id="lightbox-keywords" class="keyword-cloud"></div>
