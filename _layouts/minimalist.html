@@ -490,32 +490,119 @@
             .corner { width: 40px; height: 40px; }
         }
 
-        @media (max-width: 600px) {
-            .lightbox-meta {
-                max-height: 52vh;
-                padding: 2.5rem 0.75rem 1rem;
+        /* Mobile portrait: the lightbox leaves overlay mode entirely.
+           It becomes a scrolling page — full-width image first (natural
+           height, nothing covering it), then title + description, then
+           EXIF metadata, then the creative text. position:absolute lets
+           the image push the container tall so the BODY scrolls (no
+           double-scrollbar; body overflow is hidden while open). */
+        @media (max-width: 600px) and (orientation: portrait) {
+            body.lightbox-open .container,
+            body.lightbox-open .corner {
+                display: none;
+            }
+
+            .lightbox {
+                position: absolute;
+                inset: auto;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: auto;
+                overflow: visible;
+                display: none;
+                flex-direction: column;
+            }
+
+            .lightbox.active { display: flex; }
+
+            .lightbox img {
+                position: static;
+                inset: auto;
+                width: 100%;
+                height: auto;
+                max-height: none;
+                object-fit: contain;
+                display: block;
             }
 
             .lightbox-titlerow {
-                top: 1rem;
-                left: 1rem;
-                max-width: calc(100vw - 6.5rem);
-                flex-wrap: wrap;
-                gap: 0.35rem;
+                position: static;
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                max-width: none;
+                width: 100%;
+                order: 2;
             }
 
             .lightbox-titlerow h3 {
-                font-size: 1.1rem;
+                display: block;
+                margin: 0;
+                padding: 1rem 1.25rem;
+                font-size: 1.35rem;
+                background: #1a1a14;
+                border: none;
+                border-bottom: 1px solid rgba(242, 220, 109, 0.28);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
             }
 
             .lightbox-titlerow #lightbox-alt {
-                font-size: 0.75rem;
+                display: block;
+                -webkit-line-clamp: unset;
+                margin: 0;
+                padding: 1rem 1.25rem;
+                font-size: 1rem;
+                line-height: 1.7;
+                background: #1a1a14;
+                border: none;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+
+            .lightbox-meta {
+                position: static;
+                max-height: none;
+                overflow: visible;
+                margin: 0;
+                padding: 1rem 1rem 6rem;
+                text-align: left;
+                background: transparent;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                order: 3;
+            }
+
+            .lightbox-meta > p {
+                display: block;
+                margin: 0 0 1rem;
+                padding: 0;
+                background: none;
+                border: none;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
             }
 
             .lightbox .critique {
-                font-size: 0.85rem;
-                line-height: 1.6;
-                padding: 0.75rem 0.9rem;
+                display: block;
+                max-width: none;
+                margin: 0 0 1rem;
+                padding: 1rem 1.25rem;
+                font-size: 1rem;
+                line-height: 1.75;
+                background: #1a1a14;
+                -webkit-backdrop-filter: none;
+                backdrop-filter: none;
+            }
+
+            .lightbox-close {
+                top: 0.75rem;
+                right: 0.75rem;
+                width: 3rem;
+                height: 3rem;
+                font-size: 2rem;
+                background: rgba(13, 13, 11, 0.85);
             }
         }
     </style>
@@ -558,7 +645,9 @@
             const lbClose = lightbox.querySelector('.lightbox-close');
             const keywordBtns = document.querySelectorAll('.keyword-btn');
             const activeLabel = document.getElementById('active-keyword');
+            const mqPortrait = matchMedia('(max-width: 600px) and (orientation: portrait)');
             let activeKeyword = null;
+            let savedScrollY = 0;
 
             function open(item) {
                 lbImg.src = item.dataset.url;
@@ -586,7 +675,15 @@
 
                 lightbox.classList.add('active');
                 lightbox.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden';
+                if (mqPortrait.matches) {
+                    /* In-flow mode: swap the page for the photo page and
+                       let the body scroll it; remember where to return. */
+                    savedScrollY = window.scrollY;
+                    document.body.classList.add('lightbox-open');
+                    window.scrollTo(0, 0);
+                } else {
+                    document.body.style.overflow = 'hidden';
+                }
             }
 
             function close() {
@@ -594,6 +691,10 @@
                 lightbox.setAttribute('aria-hidden', 'true');
                 document.body.style.overflow = '';
                 lbImg.src = '';
+                if (document.body.classList.contains('lightbox-open')) {
+                    document.body.classList.remove('lightbox-open');
+                    window.scrollTo(0, savedScrollY);
+                }
             }
 
             function filter(keyword) {
