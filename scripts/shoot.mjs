@@ -18,6 +18,13 @@ const MATRIX = [
   { name: 'promax-landscape',      device: { ...devices['iPhone 14 Pro Max'], viewport: { width: 932, height: 430 }, isLandscape: true } },
   { name: 'pixel7-portrait',       device: devices['Pixel 7'] },
   { name: 'pixel7-landscape',      device: { ...devices['Pixel 7'], viewport: { width: 915, height: 412 }, isLandscape: true } },
+  // Tablets: touch-primary like phones, must get the flowing page too.
+  { name: 'ipad-portrait',         device: devices['iPad (gen 7)'] },
+  { name: 'ipad-landscape',        device: { ...devices['iPad (gen 7)'], viewport: { width: 1080, height: 810 }, isLandscape: true } },
+  { name: 'ipad-mini-portrait',    device: devices['iPad Mini'] },
+  { name: 'ipad-mini-landscape',   device: { ...devices['iPad Mini'], viewport: { width: 1024, height: 768 }, isLandscape: true } },
+  // Desktop mouse must still get the fullscreen overlay (regression guard).
+  { name: 'desktop-overlay',       device: { viewport: { width: 1440, height: 900 } } },
 ];
 
 const VIEWS = [

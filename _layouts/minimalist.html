@@ -490,18 +490,19 @@
             .corner { width: 40px; height: 40px; }
         }
 
-        /* Phones (either orientation): the lightbox leaves overlay mode
-           entirely. It becomes a scrolling page — full-width image first
-           (natural height, nothing covering it), then title + description,
-           then EXIF metadata, then the creative text. The script moves
-           .lightbox out of .container to be a direct child of body, so
-           hiding the page (body.lightbox-open) leaves the lightbox visible
-           and the BODY scrolls the photo page. */
-        /* Landscape phones are tall-little, not narrow (and modern phones
-           are ~780–932px wide in landscape), so the trigger is a short
-           touch screen: catches landscape on any phone plus small portrait. */
-        @media (max-height: 520px) and (pointer: coarse),
-               (max-width: 736px) and (pointer: coarse) {
+        /* All touch devices (phones AND tablets, any orientation): the
+           lightbox leaves overlay mode entirely. It becomes a scrolling
+           page — full-width image first (natural height, nothing covering
+           it), then title + description, then EXIF metadata, then the
+           creative text. The script moves .lightbox out of .container to
+           be a direct child of body, so hiding the page
+           (body.lightbox-open) leaves the lightbox visible and the BODY
+           scrolls the photo page.
+           The trigger is pointer-type alone: touch UIs get the flowing
+           page because overlay boxes crush on small screens and tablets
+           are touch-first too; mouse/trackpad desktops keep the
+           fullscreen overlay regardless of window size. */
+        @media (pointer: coarse) {
             body.lightbox-open .container,
             body.lightbox-open .corner {
                 display: none;
@@ -654,7 +655,7 @@
             const lbClose = lightbox.querySelector('.lightbox-close');
             const keywordBtns = document.querySelectorAll('.keyword-btn');
             const activeLabel = document.getElementById('active-keyword');
-            const mqMobileFlow = matchMedia('(max-height: 520px) and (pointer: coarse), (max-width: 736px) and (pointer: coarse)');
+            const mqMobileFlow = matchMedia('(pointer: coarse)');
             let activeKeyword = null;
             let savedScrollY = 0;
 
