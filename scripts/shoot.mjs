@@ -29,6 +29,10 @@ const MATRIX = [
 
 const VIEWS = [
   { name: 'gallery',  goto: BASE },
+  // scroll-0 shot proves the standing invariant: the ENTIRE image is
+  // visible in the 80dvh band without any scrolling, any orientation.
+  { name: 'lightbox_top', goto: BASE, clickFirstItem: true },
+  // scrolled shot proves the text stack flows below the image band.
   { name: 'lightbox', goto: BASE, clickFirstItem: true, scrollY: 400 },
 ];
 
