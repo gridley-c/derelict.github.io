@@ -37,7 +37,7 @@ jobs:
       - name: Serve _site and take screenshots
         run: |
           npx -y serve _site -l 4000 &
-          sleep 3
+          npx wait-on http://localhost:4000 --timeout 30000
           node scripts/shoot.mjs
         env:
           CI: "true"
