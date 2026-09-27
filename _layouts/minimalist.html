@@ -502,6 +502,11 @@
            page because overlay boxes crush on small screens and tablets
            are touch-first too; mouse/trackpad desktops keep the
            fullscreen overlay regardless of window size. */
+        /* The image fills exactly 80% of the viewport height and is
+           ENTIRELY visible without scrolling — object-fit:contain
+           letterboxes (pads) rather than crops, any photo aspect, any
+           screen orientation. dvh tracks mobile browser-chrome
+           show/hide; vh is the fallback. Text flows below the band. */
         @media (pointer: coarse) {
             body.lightbox-open .container,
             body.lightbox-open .corner {
@@ -526,7 +531,8 @@
                 position: static;
                 inset: auto;
                 width: 100%;
-                height: auto;
+                height: 80vh;
+                height: 80dvh;
                 max-height: none;
                 object-fit: contain;
                 display: block;
