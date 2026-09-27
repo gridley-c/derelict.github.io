@@ -28,6 +28,7 @@ node_modules/
 
 # Build output
 _site/
+shots/
 
 # Logs
 *.log

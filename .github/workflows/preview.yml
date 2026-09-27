@@ -1,0 +1,50 @@
+name: preview-and-shoot
+
+on:
+  push:
+    branches:
+      - 'preview/*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "preview-pages-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+
+      - name: Build Jekyll site to _site
+        run: bundle exec jekyll build --destination _site
+
+      - name: Install Playwright package + chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+
+      - name: Serve _site and take screenshots
+        run: |
+          npx -y serve _site -l 4000 &
+          sleep 3
+          node scripts/shoot.mjs
+        env:
+          CI: "true"
+
+      - name: Upload screenshots as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ github.sha }}
+          path: shots/
+          retention-days: 7
