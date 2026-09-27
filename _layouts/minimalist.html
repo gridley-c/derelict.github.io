@@ -497,7 +497,11 @@
            .lightbox out of .container to be a direct child of body, so
            hiding the page (body.lightbox-open) leaves the lightbox visible
            and the BODY scrolls the photo page. */
-        @media (max-width: 736px) and (pointer: coarse) {
+        /* Landscape phones are tall-little, not narrow (and modern phones
+           are ~780–932px wide in landscape), so the trigger is a short
+           touch screen: catches landscape on any phone plus small portrait. */
+        @media (max-height: 520px) and (pointer: coarse),
+               (max-width: 736px) and (pointer: coarse) {
             body.lightbox-open .container,
             body.lightbox-open .corner {
                 display: none;
@@ -650,7 +654,7 @@
             const lbClose = lightbox.querySelector('.lightbox-close');
             const keywordBtns = document.querySelectorAll('.keyword-btn');
             const activeLabel = document.getElementById('active-keyword');
-            const mqPortrait = matchMedia('(max-width: 736px) and (pointer: coarse)');
+            const mqMobileFlow = matchMedia('(max-height: 520px) and (pointer: coarse), (max-width: 736px) and (pointer: coarse)');
             let activeKeyword = null;
             let savedScrollY = 0;
 
@@ -680,7 +684,7 @@
 
                 lightbox.classList.add('active');
                 lightbox.setAttribute('aria-hidden', 'false');
-                if (mqPortrait.matches) {
+                if (mqMobileFlow.matches) {
                     /* In-flow mode: swap the page for the photo page and
                        let the body scroll it; remember where to return. */
                     savedScrollY = window.scrollY;
