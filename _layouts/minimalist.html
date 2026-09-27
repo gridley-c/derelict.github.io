@@ -490,13 +490,14 @@
             .corner { width: 40px; height: 40px; }
         }
 
-        /* Mobile portrait: the lightbox leaves overlay mode entirely.
-           It becomes a scrolling page — full-width image first (natural
-           height, nothing covering it), then title + description, then
-           EXIF metadata, then the creative text. position:absolute lets
-           the image push the container tall so the BODY scrolls (no
-           double-scrollbar; body overflow is hidden while open). */
-        @media (max-width: 600px) and (orientation: portrait) {
+        /* Phones (either orientation): the lightbox leaves overlay mode
+           entirely. It becomes a scrolling page — full-width image first
+           (natural height, nothing covering it), then title + description,
+           then EXIF metadata, then the creative text. The script moves
+           .lightbox out of .container to be a direct child of body, so
+           hiding the page (body.lightbox-open) leaves the lightbox visible
+           and the BODY scrolls the photo page. */
+        @media (max-width: 736px) and (pointer: coarse) {
             body.lightbox-open .container,
             body.lightbox-open .corner {
                 display: none;
@@ -636,6 +637,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             const items = Array.from(document.querySelectorAll('.gallery-item'));
             const lightbox = document.getElementById('lightbox');
+            /* The lightbox markup comes from the page body (index.md), so
+               Jekyll nests it inside .container — which mobile mode hides
+               while open. Move it to a direct child of body first. */
+            document.body.appendChild(lightbox);
             const lbImg = document.getElementById('lightbox-img');
             const lbCaption = document.getElementById('lightbox-caption');
             const lbAlt = document.getElementById('lightbox-alt');
@@ -645,7 +650,7 @@
             const lbClose = lightbox.querySelector('.lightbox-close');
             const keywordBtns = document.querySelectorAll('.keyword-btn');
             const activeLabel = document.getElementById('active-keyword');
-            const mqPortrait = matchMedia('(max-width: 600px) and (orientation: portrait)');
+            const mqPortrait = matchMedia('(max-width: 736px) and (pointer: coarse)');
             let activeKeyword = null;
             let savedScrollY = 0;
 
